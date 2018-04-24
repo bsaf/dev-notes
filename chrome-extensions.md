@@ -2,11 +2,12 @@
 
 ## Basic setup
 
-You will need a manifest.json, a hello.html, and an icon as a png.
+Create an empty folder. In it, you will need a `manifest.json`.
 
-manifest.json:
 
 ```
+// manifest.json
+
 {
   "name": "Hello Extensions",
   "description": "A simple extension.",
@@ -15,34 +16,19 @@ manifest.json:
 }
 ```
 
-Add a browser_action item in the manifest.json to open a popup when you click the extension.
+Add a `browser_action` item in `manifest.json` to open a HTML file as a popup when you click the extension. (Create `hello.html` as well.)
 
 ```
   "browser_action": {
-    "default_popup": "hello.html",
-    "default_icon": "hello_extensions.png"
-  }
-```
-
-Add a "commands" item to set a keyboard shortcut:
-
-```
-  "commands": {
-    "_execute_browser_action": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+F",
-        "mac": "MacCtrl+Shift+F"
-      },
-      "description": "Opens hello.html"
-    }
+    "default_popup": "hello.html"
   }
 ```
 
 ## Adding a background script
 
-A background script is Javascript that ...
+A background script is Javascript that runs when your extension is loaded. You can put listeners in it to respond to various events.
 
-Create background.js and then include the script via the manifest.json:
+Create `background.js` and then include the script in the `manifest.json`:
 
 ```
   "background": {
@@ -53,7 +39,7 @@ Create background.js and then include the script via the manifest.json:
 
 ## Running code on installation
 
-To do this, listen for runtime.onInstalled within the background script.
+To run code when the extension is first installed, listen for `runtime.onInstalled` within the background script.
 
 ```
   chrome.runtime.onInstalled.addListener(function() {
@@ -61,9 +47,9 @@ To do this, listen for runtime.onInstalled within the background script.
   });
 ```
 
-## Storing something using the storage API
+## Storing data using the storage API
 
-Use storage.sync.set(data, callback):
+Use `storage.sync.set(data, callback)` :
 
 ```
   chrome.storage.sync.set({color: '#3aa757'}, function() {
@@ -77,9 +63,11 @@ You'll also need to register the "storage" permission in the manifest.json:
   "permissions": ["storage"]
 ```
 
+See the [API docs](https://developer.chrome.com/apps/storage) for `chrome.storage`.
+
 ## Getting something out of storage
 
-First, make sure you've added the storage permission to the manifest.json (see above).
+First, make sure you've added the storage permission to the `manifest.json` (see above).
 
 Then, get things out like this:
 
@@ -92,7 +80,7 @@ chrome.storage.sync.get('color', function (data) {
 
 ## Displaying a popup when you click the extension
 
-You can use browser_action in the manifest.json -- this will make the extension active at all times.
+You can use `browser_action` in the manifest.json -- this will make the extension active at all times.
 
 ```
   "browser_action": {
@@ -100,7 +88,7 @@ You can use browser_action in the manifest.json -- this will make the extension 
   }
 ```
 
-If you only want the popup to be active on specific pages, use page_action in manifest.json:
+If you only want the extension/popup to be active on specific pages, use `page_action` in `manifest.json`:
 
 ```
   "page_action": {
@@ -108,7 +96,7 @@ If you only want the popup to be active on specific pages, use page_action in ma
   }
 ```
 
-And you also need to add declared rules using the declaritiveContent API. This one is saying "only let this work on developer.chrome.com"). We do this inside the runtime.onInstalled listener event:
+And you also need to add declared rules using the declaritiveContent API. The following example is saying "only let this work on developer.chrome.com"). We do this inside the `runtime.onInstalled` listener event:
 
 ```
 chrome.runtime.onInstalled.addListener(function () {
@@ -129,7 +117,7 @@ chrome.runtime.onInstalled.addListener(function () {
 Finally, you need to add permission to access the `declarativeContent` API in the `manifest.json`.
 
 ```
-    "permissions": ["declarativeContent"],
+    "permissions": ["declarativeContent"]
 ```
 
 ## Displaying an icon
@@ -147,7 +135,7 @@ Toolbar icons – add `default_icon` to `page_action` or `browser_action`:
     },
 ```
 
-Other icons (extension management page, the permissions warning, and favicon) – add to an "icons" item – not in `page_action`:
+Other icons (extension management page, the permissions warning, and favicon) – add to an `icons` item – not in `page_action`, but in the root object:
 
 ```
     "icons": {
@@ -158,9 +146,9 @@ Other icons (extension management page, the permissions warning, and favicon) �
     },
 ```
 
-## Adding external script file to your popup
+## Adding an external script file to your popup
 
-Just include normally:
+Just include it normally:
 
 ```
 <script src="popup.js"></script>
@@ -177,7 +165,7 @@ chrome.storage.sync.get('color', function (data) {
 });
 ```
 
-## Running code on a web page
+## Running your code on a web page
 
 You can **programatically inject** code into the active tab – so you could inject the code when a button is clicked.
 
@@ -204,7 +192,7 @@ You will also need to give the extension access to the tabs API:
 
 ## Adding an options page
 
-First, add `options.html` to the project. Then register the options page in the manifest.json root object:
+First, add `options.html` to the project. Then register the options page in the `manifest.json` root object:
 
 ```
 "options_page": "options.html",
@@ -212,7 +200,7 @@ First, add `options.html` to the project. Then register the options page in the 
 
 You can get to this page by reloading the extension, clicking DETAILS, then 'Extension options'.
 
-You can reference a .js file from the options page. This one sets a clicked colour into chrome.storage:
+You can reference a .js file from the options page. This one sets a clicked colour into `chrome.storage`:
 
 ```
 const kButtonColors = ['#3aa757', '#e8453c', '#f9bb2d', '#4688f1']
@@ -232,9 +220,18 @@ function constructOptions(kButtonColors) {
 constructOptions(kButtonColors);
 ```
 
+## Adding a keyboard shortcut to invoke the extension
 
+Add a `commands` item in `manifest.json` to set a keyboard shortcut:
 
-
-
-
-
+```
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "MacCtrl+Shift+F"
+      },
+      "description": "Opens hello.html"
+    }
+  }
+```
