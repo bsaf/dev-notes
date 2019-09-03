@@ -235,3 +235,36 @@ Add a `commands` item in `manifest.json` to set a keyboard shortcut:
     }
   }
 ```
+
+## Triggering an action when a tab changes (e.g. a hash URL changes)
+
+Check in `manifest.json` to see if you have a background script, or add one.
+
+```
+  "background": {
+    "scripts": ["background.js"]
+  }
+```
+
+In the `background.js` (or whatever background script you are using), send a message on `tabs.onUpdated`:
+
+```
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  chrome.tabs.sendMessage(tabId, {
+    message: "urlChanged",
+    url: tab.url
+  });
+});
+```
+
+In your foreground script, listen for this message:
+
+```
+// there's a message!
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  // it's a url changed message!
+  if (request.message === "urlChanged") {
+    console.log(request)
+  }
+});
+```
