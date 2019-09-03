@@ -246,6 +246,12 @@ Check in `manifest.json` to see if you have a background script, or add one.
   }
 ```
 
+You also need to add a `tabs` permission to `manifest.json`:
+
+```
+  "permissions": ["activeTab", "tabs", "storage"]
+```
+
 In the `background.js` (or whatever background script you are using), send a message on `tabs.onUpdated`:
 
 ```
