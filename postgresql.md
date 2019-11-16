@@ -2,7 +2,7 @@
 
 ### Create table
 
-```
+```sql
 CREATE TABLE weather (
     city            varchar(80),
     temp_lo         int,           -- low temperature
@@ -19,13 +19,13 @@ CREATE TABLE cities (
 
 ### Drop table
 
-```
+```sql
 DROP TABLE tablename;
 ```
 
 ### Create rows
 
-```
+```sql
 INSERT INTO weather VALUES ('San Francisco', 46, 50, 0.25, '1994-11-27'); -- use the implicit order of columns
 
 INSERT INTO cities VALUES ('San Francisco', '(-194.0, 53.0)');
@@ -36,19 +36,19 @@ INSERT INTO weather (city, temp_lo, temp_hi, prcp, date) -- specify the columns 
 
 ### Column types
 
-```
+```sql
 TODO
 ```
 
 ### Querying
 
-```
+```sql
 SELECT * FROM weather; -- all columns
 ```
 
 ### Use an expression as a column
 
-```
+```sql
 SELECT city, (temp_hi+temp_lo)/2 AS temp_avg, date FROM weather;
 -- AS relabels the column
 ```
@@ -57,15 +57,21 @@ SELECT city, (temp_hi+temp_lo)/2 AS temp_avg, date FROM weather;
 
 You can use `AND`, `OR`, `NOT`
 
-```
+```sql
 SELECT * FROM weather
     WHERE city = 'San Francisco' AND prcp > 0.0;
 ```
 
 ### Order results
 
-```
+```sql
 SELECT * FROM weather
     ORDER BY city;
+    
+-- order by two columns
+SELECT * FROM weather
+ORDER BY city, temp_lo;
 ```
+
+
 
