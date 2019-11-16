@@ -101,6 +101,17 @@ SELECT DISTINCT city
     WHERE city = name;
 ```
 
+### Deletions
+
+```sql
+DELETE FROM weather WHERE city = 'Hayward';
+```
+
+### Describe table
+
+```sql
+\d+ weather
+```
 
 
 
