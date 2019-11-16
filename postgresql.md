@@ -73,5 +73,22 @@ SELECT * FROM weather
 ORDER BY city, temp_lo;
 ```
 
+### Remove duplicates
+
+```sql
+SELECT DISTINCT city
+    FROM weather
+    ORDER BY city;
+ ```
+ 
+ ### Joins
+ 
+ ```sql
+ SELECT *
+    FROM weather, cities
+    WHERE city = name;
+```
+
+
 
 
