@@ -1,5 +1,7 @@
 # Everything I know about making Chrome Extensions
 
+See the Chrome Extensions [getting started docs](https://developer.chrome.com/docs/extensions/mv3/getstarted/).
+
 ## Basic setup
 
 Create an empty folder. In it, you will need a `manifest.json`.
