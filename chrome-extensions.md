@@ -5,14 +5,12 @@
 Create an empty folder. In it, you will need a `manifest.json`.
 
 
-```
-// manifest.json
-
+```json
 {
   "name": "Hello Extensions",
   "description": "A simple extension.",
   "version": "1.0",
-  "manifest_version": 2
+  "manifest_version": 3
 }
 ```
 
